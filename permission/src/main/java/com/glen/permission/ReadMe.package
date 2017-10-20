@@ -1,0 +1,4 @@
+shouldShowRequestPermissionRationale()
+。如果应用之前请求过此权限但用户拒绝了请求，此方法将返回 true
+注：如果用户在过去拒绝了权限请求，并在权限请求系统对话框中选择了 Don't ask again 选项，此方法将返回 false
+(但是在小米手机下，这个方法永远会返回false,对此我们需要引导用户去安全中心去授权，V4包中PermissionChecker类做了相应处理，如：PermissionChecker.checkPermission(this, permission,Process.myPid(),Process.myUid(), getPackageName()))
