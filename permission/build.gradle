@@ -6,7 +6,6 @@ apply plugin: 'com.jfrog.bintray'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
-    resourcePrefix "permission_res_"
 
     defaultConfig {
         minSdkVersion 15
@@ -14,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,12 +21,6 @@ android {
         }
     }
 
-    lintOptions {
-        checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
-        abortOnError false
-    }
 
 }
 
@@ -51,6 +45,8 @@ install {
             project {
                 packaging 'aar'
                 // 项目描述，复制我的话，这里需要修改。
+                groupId 'com.glen.permission'
+                artifactId 'permission'
                 name 'PermissionGlen'// 可选，项目名称。
                 description 'Android 6.0权限处理工具，兼容小米双授权处理。'// 可选，项目描述。
                 url siteUrl // 项目主页，这里是引用上面定义好。
@@ -110,22 +106,21 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 bintray {
     user = properties.getProperty("bintray.user") // Bintray的用户名。
     key = properties.getProperty("bintray.apikey") // Bintray刚才保存的ApiKey。
-
     configurations = ['archives']
     pkg {
-        repo = "PermissionGlen"  // 上传到maven库。（这里要特别注意，如果写了maven报404错误，请在bintray创建一个仓库，这里填改成你创建的仓库的名字，如何创建请看下图。）
-        name = "permission"  // 发布到Bintray上的项目名字，这里的名字不是compile 'com.yanzhenjie:andserver:1.0.1'中的andserver。
-        userOrg = 'glen1943' // Bintray的用户名，2016年11月更新。
-
-        /*version {
-            name = '1.0.0-release'
-            desc = "this is test permission"
-            vcsTag = '1.0.0'
-        }*/
-
+        repo = "maven"  // 上传到maven库。（这里要特别注意，如果写了maven报404错误，请在bintray创建一个仓库，这里填改成你创建的仓库的名字，如何创建请看下图。）
+        name = "PermissionGlen"  // 发布到Bintray上的项目名字，这里的名字不是compile 'com.yanzhenjie:andserver:1.0.1'中的andserver。
+        userOrg = 'glen9527' // Bintray的用户名，2016年11月更新。
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
         publish = true // 是否是公开项目。
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+task findConventions << {
+    println project.getConvention()
 }
